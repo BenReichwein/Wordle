@@ -22,15 +22,22 @@ export default class App extends Component {
       completed: localStorage.getItem('nordle_completed'),
       timeLeft: '',
     }
+    // Binding input with the child prop
     this.handleInput=this.handleInput.bind(this)
   }
 
   componentDidMount = () => {
+    // Checks if completed popup should show
     if (this.state.completed === 'true') {
       this.timeTill();
+      // Removes the popup if its the next day
+      if (localStorage.getItem('nordle_dayCompleted') !== `${dayOfYear(new Date())}`) {
+        this.setState({completed: false})
+        localStorage.removeItem('nordle_completed')
+      }
     }
   }
-
+  // Countdown until 12am
   timeTill() {
     let timeLeft = ""
     let start = new Date();
@@ -42,7 +49,7 @@ export default class App extends Component {
 
     function tick() {
       let now = new Date();
-      if (now > start) { // too late, go to tomorrow
+      if (now > start) {
         start.setDate(start.getDate() + 1)
       }
       let remain = ((start - now) / 1000)
@@ -59,14 +66,16 @@ export default class App extends Component {
   handleInput(e){
     let {words, word, onWord} = this.state
     let resultsArr = []
+    // Enter functionality
     if (e === "<" && words[onWord].length >= 5) {
       let sep = words[onWord]
+      // Puts correct or incorrect letters into resultsArr
       sep.forEach((e, index) => {
         resultsArr.push({
           letter: e.letter,
           position: index,
           color: word.indexOf(e.letter) === index ? 'lightGreen' :
-          word.indexOf(e.letter) < 0 ? 'gray' : 'yellow'
+          word.indexOf(e.letter) < 0 ? 'lightGray' : 'yellow'
         })
       })
       this.setState({
@@ -75,6 +84,7 @@ export default class App extends Component {
           [onWord]: resultsArr
         }
       })
+      // If the words match then starts the complete functionality
       if (words[onWord].map(u => u.letter).join('') === word) {
         this.setState({completed: 'true'})
         this.timeTill()
@@ -83,8 +93,10 @@ export default class App extends Component {
         localStorage.getItem('nordle_timesCompleted') ? 
         parseInt(localStorage.getItem('nordle_timesCompleted')) + 1: 1)
         localStorage.setItem('nordle_lastAttempt', onWord)
+        localStorage.setItem('nordle_dayCompleted', dayOfYear(new Date()))
       }
       this.setState({onWord: onWord + 1})
+    // Delete key functionality
     } else if (e === "del") {
       console.log(words[onWord])
       this.setState({
@@ -93,6 +105,7 @@ export default class App extends Component {
           [onWord]: words[onWord].slice(0,-1)
         }
       })
+    // Key pressed functionality
     } else if (words[onWord].length < 5 && e !== "<" && e !== "del") {
       this.setState({
         words: {
@@ -118,7 +131,6 @@ export default class App extends Component {
           textTransform: 'uppercase',
           fontWeight: 'bold',
           fontSize: 32,
-          fontFamily: 'Monospace',
           letterSpacing: 6,
           color: '#3A3B3C'
   
