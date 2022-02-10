@@ -16,6 +16,7 @@ export default function FormRow(props) {
         <React.Fragment>
         <Grid item xs={2}>
             <Item sx={{
+                height: 25,
                 textTransform: 'uppercase', 
                 backgroundColor: word[0]?.color,
                 }}>
@@ -24,6 +25,7 @@ export default function FormRow(props) {
         </Grid>
         <Grid item xs={2}>
             <Item sx={{
+                height: 25,
                 textTransform: 'uppercase', 
                 backgroundColor: word[1]?.color,
                 }}>
@@ -32,6 +34,7 @@ export default function FormRow(props) {
         </Grid>
         <Grid item xs={2}>
             <Item sx={{
+                height: 25,
                 textTransform: 'uppercase', 
                 backgroundColor: word[2]?.color,
                 }}>
@@ -40,6 +43,7 @@ export default function FormRow(props) {
         </Grid>
         <Grid item xs={2}>
             <Item sx={{
+                height: 25,
                 textTransform: 'uppercase', 
                 backgroundColor: word[3]?.color,
                 }}>
@@ -48,6 +52,7 @@ export default function FormRow(props) {
         </Grid>
         <Grid item xs={2}>
             <Item sx={{
+                height: 25,
                 textTransform: 'uppercase', 
                 backgroundColor: word[4]?.color,
                 }}>

@@ -5,7 +5,9 @@ import 'simple-keyboard/build/css/index.css';
 class KeyInput extends Component {
   render(){
     return (
-      <div style={{marginTop: 30}}>
+      <div style={{
+        marginTop: 80,
+      }}>
         <Keyboard
           onKeyPress={this.props.getInput}
             layout={{

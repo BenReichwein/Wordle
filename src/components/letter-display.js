@@ -13,7 +13,7 @@ export default function LetterDisplay(props) {
     }}>
       <Box style={{
         marginTop: 25,
-        maxWidth: 325
+        maxWidth: 375
       }} 
       sx={{ flexGrow: 1 }}
       >

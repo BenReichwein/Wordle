@@ -27,29 +27,33 @@ export default class App extends Component {
 
   componentDidMount = () => {
     if (this.state.completed === 'true') {
-      let timeLeft = ""
-      let start = new Date();
-      start.setHours(23, 59, 59);
-
-      function pad(num) {
-        return ("0" + parseInt(num)).substr(-2);
-      }
-
-      function tick() {
-        let now = new Date();
-        if (now > start) { // too late, go to tomorrow
-          start.setDate(start.getDate() + 1)
-        }
-        let remain = ((start - now) / 1000)
-        let hh = pad((remain / 60 / 60) % 60)
-        let mm = pad((remain / 60) % 60)
-        let ss = pad(remain % 60)
-        timeLeft = hh + ":" + mm + ":" + ss
-        setTimeout(tick, 1000)
-      }
-      tick()
-      this.setState({timeLeft})
+      this.timeTill();
     }
+  }
+
+  timeTill() {
+    let timeLeft = ""
+    let start = new Date();
+    start.setHours(23, 59, 59);
+
+    function pad(num) {
+      return ("0" + parseInt(num)).substr(-2);
+    }
+
+    function tick() {
+      let now = new Date();
+      if (now > start) { // too late, go to tomorrow
+        start.setDate(start.getDate() + 1)
+      }
+      let remain = ((start - now) / 1000)
+      let hh = pad((remain / 60 / 60) % 60)
+      let mm = pad((remain / 60) % 60)
+      let ss = pad(remain % 60)
+      timeLeft = hh + ":" + mm + ":" + ss
+      setTimeout(tick, 1000)
+    }
+    tick()
+    this.setState({timeLeft})
   }
 
   handleInput(e){
@@ -73,6 +77,7 @@ export default class App extends Component {
       })
       if (words[onWord].map(u => u.letter).join('') === word) {
         this.setState({completed: 'true'})
+        this.timeTill()
         localStorage.setItem('nordle_completed', true)
         localStorage.setItem('nordle_timesCompleted', 
         localStorage.getItem('nordle_timesCompleted') ? 
