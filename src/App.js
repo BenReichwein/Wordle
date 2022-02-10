@@ -22,6 +22,7 @@ export default class App extends Component {
       completed: localStorage.getItem('nordle_completed'),
       timeLeft: '',
     }
+    this.handleInput=this.handleInput.bind(this)
   }
 
   componentDidMount = () => {
